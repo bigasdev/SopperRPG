@@ -5,25 +5,48 @@ using UnityEngine;
 [RequireComponent (typeof (Controller))]
 public class Player : MonoBehaviour
 {
-	float moveSpeed = 6;
-	float gravity = -5;
 	public Animator anim;
+	
+	public float jumpHeight = 4;
+	public float timeToJumpApex = .4f;
+	float accelerationTimeAirborne = .2f;
+	float accelerationTimeGrounded = .1f;
+	public float moveSpeed = 6;
+
+	float gravity;
+	float jumpVelocity;
 	Vector3 velocity;
+	float velocityXSmoothing;
 
 	Controller controller;
 
 	void Start()
 	{
 		controller = GetComponent<Controller>();
+
+		gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+		jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+		print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
 	}
 
 	void Update()
 	{
 		float h = Input.GetAxis("Horizontal");
-		
+
+		if (controller.collisions.above || controller.collisions.below)
+		{
+			velocity.y = 0;
+		}
+
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-		velocity.x = input.x * moveSpeed;
+		if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
+		{
+			velocity.y = jumpVelocity;
+		}
+
+		float targetVelocityX = input.x * moveSpeed;
+		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move(velocity * Time.deltaTime);
 
@@ -37,4 +60,7 @@ public class Player : MonoBehaviour
 		}
 		anim.SetFloat("horizontal", Mathf.Abs(h));
 	}
+
+		
+
 }
