@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1149753304d5ada449b2d8e32d5da0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 396020108}
 --- !u!212 &396020105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396020103}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.83, y: 2.19, z: 0}
+  m_LocalPosition: {x: 0.28, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -236,6 +237,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 512
+  anim: {fileID: 396020108}
   horizontalRayCount: 4
   verticalRayCount: 4
 --- !u!95 &396020108
