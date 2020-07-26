@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 	Vector3 velocity;
 	float velocityXSmoothing;
 
+
 	Controller controller;
 
 	void Start()
@@ -47,8 +48,12 @@ public class Player : MonoBehaviour
 
 		float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+		if(h < 0)
+		{
+			velocity.x = Mathf.SmoothDamp(-velocity.x, -targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? -accelerationTimeGrounded : -accelerationTimeAirborne);
+		}
 		velocity.y += gravity * Time.deltaTime;
-		controller.Move(velocity * Time.deltaTime);
+	    controller.Move(velocity * Time.deltaTime);		
 
 		if (h == 0)
 		{
@@ -59,8 +64,14 @@ public class Player : MonoBehaviour
 			anim.SetBool("Idle", false);
 		}
 		anim.SetFloat("horizontal", Mathf.Abs(h));
+
+        if(h < 0)
+		{
+			transform.eulerAngles = new Vector3(0, 180, 0);
+		}
+		else
+		{
+			transform.eulerAngles = new Vector3(0, 0, 0);
+		}
 	}
-
-		
-
 }
