@@ -14,14 +14,20 @@ public class Controller : MonoBehaviour
 	float horizontalRaySpacing;
 	float verticalRaySpacing;
 
+	public Vector2 playerInput;
+
 	BoxCollider2D collider;
 	RaycastOrigins raycastOrigins;
 	public CollisionInfo collisions;
 
-	void Start()
+	void Awake()
 	{
-		collider = GetComponent<BoxCollider2D>();
-		CalculateRaySpacing();
+		collider = GetComponent<BoxCollider2D>();		
+	}
+
+	public virtual void Start()
+	{
+        CalculateRaySpacing();
 	}
 
 	public void Move(Vector3 velocity)
