@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 		if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
-		{
+		{			
 			velocity.y = jumpVelocity;
 		}
 
@@ -53,7 +53,16 @@ public class Player : MonoBehaviour
 			velocity.x = Mathf.SmoothDamp(-velocity.x, -targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? -accelerationTimeGrounded : -accelerationTimeAirborne);
 		}
 		velocity.y += gravity * Time.deltaTime;
-	    controller.Move(velocity * Time.deltaTime);		
+	    controller.Move(velocity * Time.deltaTime);	
+		
+		if(velocity.y >= 1 || velocity.y <= -1)
+		{
+			anim.SetBool("Jump", true);
+		}
+		else
+		{
+			anim.SetBool("Jump", false);
+		}
 
 		if (h == 0)
 		{
@@ -72,6 +81,11 @@ public class Player : MonoBehaviour
 		else
 		{
 			transform.eulerAngles = new Vector3(0, 0, 0);
+		}
+
+		if(Input.GetButtonDown("Fire1"))
+		{
+			anim.SetTrigger("Attack");
 		}
 	}
 }
