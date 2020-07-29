@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
 	float accelerationTimeGrounded = .1f;
 	public float moveSpeed = 6;
 
+	public GameObject sfx;
+	public Transform sfxPlace;
+	private float swordTimer = .5f;
+
 	float gravity;
 	float jumpVelocity;
 	Vector3 velocity;
@@ -32,6 +36,8 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
+		swordTimer += Time.deltaTime;
+		
 		float h = Input.GetAxis("Horizontal");
 
 		if (controller.collisions.above || controller.collisions.below)
@@ -83,9 +89,18 @@ public class Player : MonoBehaviour
 			transform.eulerAngles = new Vector3(0, 0, 0);
 		}
 
-		if(Input.GetButtonDown("Fire1"))
+		if(Input.GetButtonDown("Fire1") && swordTimer >= .5f)
 		{
 			anim.SetTrigger("Attack");
+			StartCoroutine(sfxEffect());
+			swordTimer = 0f;
+		}
+
+		IEnumerator sfxEffect()
+		{
+			yield return new WaitForSeconds(.4f);
+			var sfxE = Instantiate(sfx, sfxPlace);
+			Destroy(sfxE, .2f);
 		}
 	}
 }
