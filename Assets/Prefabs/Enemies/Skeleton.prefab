@@ -164,5 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b0a50cda847b34998e2518c2954f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
+  lives: 2
+  hit: {fileID: 0}
+  death: {fileID: 0}
+  deathVFX: {fileID: 2395826696006055252, guid: 05d64edac2f552a4a8c9d1d3a7931931, type: 3}
   knockback: 5
