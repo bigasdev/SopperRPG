@@ -30,7 +30,11 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
+       if(collision.gameObject.tag == "Enemy")
+        {
+            var hitD = collision.GetComponent<Hitable>();
+            hitD.Hit(1);
+        }
     }
 
     public void setHitBox(hitBoxes val)

@@ -80,11 +80,11 @@ public class Player : MonoBehaviour
 		}
 		anim.SetFloat("horizontal", Mathf.Abs(h));
 
-        if(h < 0)
+        if(Input.GetKeyDown(KeyCode.A))
 		{
 			transform.eulerAngles = new Vector3(0, 180, 0);
 		}
-		else
+		else if (Input.GetKeyDown(KeyCode.D))
 		{
 			transform.eulerAngles = new Vector3(0, 0, 0);
 		}
